@@ -14,7 +14,9 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) gd \
     && docker-php-ext-install zip \
-    && (crontab -u www-data -l; echo "* * * * * cd /var/www/com.coder17.www;/usr/local/bin/php bin/grav scheduler 1>> /dev/null 2>&1") | crontab -u www-data -
+    && (crontab -u www-data -l; echo "* * * * * cd /var/www/com.coder17.www;/usr/local/bin/php bin/grav scheduler 1>> /dev/null 2>&1") | crontab -u www-data - \
+    && (crontab -l; echo "* * * * * cd /var/www/com.coder17.www;/usr/local/bin/php bin/grav scheduler 1>> /dev/null 2>&1") | crontab - \
+    && service cron start
 
 
 # set recommended PHP.ini settings
